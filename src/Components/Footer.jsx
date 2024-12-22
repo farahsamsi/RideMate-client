@@ -9,8 +9,8 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div>
-      <footer className="footer bg-black text-white p-10 grid grid-cols-1 md:grid-cols-3">
+    <div className="bg-black text-white p-10">
+      <footer className="footer container mx-auto  grid grid-cols-1 md:grid-cols-3">
         <nav>
           <Link to="/" className="text-2xl font-audioWide">
             <span className="text-primary">R</span>ide

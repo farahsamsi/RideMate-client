@@ -4,7 +4,7 @@ import Footer from "../Components/Footer";
 
 const MainLayout = () => {
   return (
-    <div className="font-outfit">
+    <div className="font-outfit relative">
       {/* navbar */}
       <Navbar></Navbar>
 
