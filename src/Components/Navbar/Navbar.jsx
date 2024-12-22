@@ -1,4 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
+import "./Navbar.css";
 
 const Navbar = () => {
   const links = (
@@ -54,10 +55,7 @@ const Navbar = () => {
 
         {/* conditional rendering user avatar or register button */}
         <div className="navbar-end">
-          <Link
-            to="register"
-            className="btn bg-primary font-light lg:text-xl rounded-3xl"
-          >
+          <Link to="register" className="btn bg-primary font-light rounded-3xl">
             Register
           </Link>
           <div className="dropdown dropdown-end hidden">

@@ -65,7 +65,7 @@ function Banner() {
         </div>
       ))}
       {/* Carousel controls */}
-      <div className="absolute bottom-6 flex justify-center w-full space-x-2 z-50">
+      <div className="absolute bottom-6 flex justify-center w-full space-x-2 z-40">
         {slides.map((_, index) => (
           <button
             key={index}
