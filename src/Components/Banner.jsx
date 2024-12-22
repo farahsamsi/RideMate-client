@@ -17,7 +17,7 @@ function Banner() {
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Automatically change slides every 5 seconds
+  // Automatically change slides every 8 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
