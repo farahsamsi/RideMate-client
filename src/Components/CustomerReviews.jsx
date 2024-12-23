@@ -12,7 +12,10 @@ import {
   Virtual,
 } from "swiper/modules";
 
+import AOS from "aos";
+
 import ReactStars from "react-rating-stars-component";
+import { useEffect } from "react";
 
 const firstExample = {
   size: 30,
@@ -21,6 +24,14 @@ const firstExample = {
 };
 
 const CustomerReviews = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      offset: 50,
+      // easing: "ease-in-out",
+      //   delay: 100,
+    });
+  }, []);
   const testimonials = [
     {
       name: "Dan Martin",
@@ -63,16 +74,23 @@ const CustomerReviews = () => {
     <div className="my-4 md:my-6 lg:my-20 container mx-auto">
       {/* swiper */}
       <div className="w-11/12 mx-auto rounded-lg lg:grid lg:grid-cols-2">
-        <div className="md:w-8/12 mx-auto flex flex-col justify-center items-center text-center gap-4 mb-5 ">
+        <div
+          data-aos="fade-up"
+          data-aos-duration="3000"
+          className="md:w-8/12 mx-auto flex flex-col justify-center items-center text-center gap-4 mb-5 "
+        >
           <h1 className={`text-2xl lg:text-5xl font-bold `}>Happy Customers</h1>
           <p className="font-medium px-4">
             Real Stories, Real Experiences – Hear What Our Customers Have to Say
           </p>
         </div>
-        <div>
+        <div
+          data-aos="flip-left"
+          data-aos-easing="ease-out-cubic"
+          data-aos-duration="2000"
+        >
           <Swiper
             effect={"fade"}
-            //   navigation
             pagination={{
               clickable: true,
             }}

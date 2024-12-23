@@ -1,7 +1,7 @@
 import Banner from "../Components/Banner";
 import CustomerReviews from "../Components/CustomerReviews";
 import RecentCars from "../Components/RecentCars";
-// import Testimonials from "../Components/Testimonials/Testimonials";
+import SpecialOffers from "../Components/SpecialOffers";
 import WhyChooseUs from "../Components/WhyChooseUs";
 
 const Home = () => {
@@ -11,8 +11,9 @@ const Home = () => {
       <Banner></Banner>
       <WhyChooseUs></WhyChooseUs>
       <RecentCars></RecentCars>
-      {/* <Testimonials></Testimonials> */}
+
       <CustomerReviews></CustomerReviews>
+      <SpecialOffers></SpecialOffers>
     </div>
   );
 };
