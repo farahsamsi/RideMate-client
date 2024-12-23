@@ -1,7 +1,44 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../AuthProvider/AuthProvider";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
+  const { user, loading, handleLogOut } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [newUser, setNewUser] = useState({});
+  useEffect(() => {
+    if (loading) {
+      console.log("wait");
+    } else {
+      setNewUser(user);
+    }
+  }, [loading, user]);
+
+  const signOutBtn = () => {
+    Swal.fire({
+      text: "Are you sure you want to sign out?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#FFC311",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Sign Out!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleLogOut().then(() => {
+          toast.info("Successfully Signed Out");
+          navigate("/");
+          Swal.fire({
+            text: "Your are successfully signed out from RideMate",
+            icon: "success",
+          }).catch((error) => toast.error(error.message));
+        });
+      }
+    });
+  };
+
   const links = (
     <>
       <li>
@@ -10,8 +47,26 @@ const Navbar = () => {
       <li>
         <NavLink to="availableCars">Available Cars</NavLink>
       </li>
+      {user ? (
+        ""
+      ) : (
+        <li>
+          <NavLink to="login">Login</NavLink>
+        </li>
+      )}
+    </>
+  );
+
+  const userLinks = (
+    <>
       <li>
-        <NavLink to="login">Login</NavLink>
+        <Link to="/">Home</Link>
+      </li>
+      <li>
+        <a>Settings</a>
+      </li>
+      <li onClick={signOutBtn}>
+        <a>Logout</a>
       </li>
     </>
   );
@@ -55,40 +110,32 @@ const Navbar = () => {
 
         {/* conditional rendering user avatar or register button */}
         <div className="navbar-end">
-          <Link to="register" className="btn bg-primary font-light rounded-3xl">
-            Register
-          </Link>
-          <div className="dropdown dropdown-end hidden">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
-              <div className="w-11 rounded-full">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                />
+          {user ? (
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
+              >
+                <div className="w-11 rounded-full">
+                  <img alt={newUser?.displayName} src={newUser?.photoURL} />
+                </div>
               </div>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              >
+                {userLinks}
+              </ul>
             </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+          ) : (
+            <Link
+              to="register"
+              className="btn bg-primary font-light rounded-3xl"
             >
-              <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li>
-                <a>Settings</a>
-              </li>
-              <li>
-                <a>Logout</a>
-              </li>
-            </ul>
-          </div>
+              Register
+            </Link>
+          )}
         </div>
       </div>
     </div>
