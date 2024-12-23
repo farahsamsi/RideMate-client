@@ -21,6 +21,7 @@ const Router = createBrowserRouter([
       {
         path: "availableCars",
         element: <AvailableCars></AvailableCars>,
+        loader: () => fetch(`${import.meta.env.VITE_url}/cars`),
       },
       {
         path: "login",

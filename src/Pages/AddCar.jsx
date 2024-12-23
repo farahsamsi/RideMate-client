@@ -49,9 +49,9 @@ const AddCar = () => {
       datePosted,
     };
 
-    console.log(carData);
+    // console.log(carData);
 
-    fetch("http://localhost:5000/cars", {
+    fetch(`${import.meta.env.VITE_url}/cars`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
