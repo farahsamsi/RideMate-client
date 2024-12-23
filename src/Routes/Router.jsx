@@ -5,6 +5,8 @@ import AvailableCars from "../Pages/AvailableCars";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import Error from "../Pages/Error";
+import PrivateRoute from "./PrivateRoute";
+import AddCar from "../Pages/AddCar";
 
 const Router = createBrowserRouter([
   {
@@ -27,6 +29,14 @@ const Router = createBrowserRouter([
       {
         path: "register",
         element: <Register></Register>,
+      },
+      {
+        path: "addCar",
+        element: (
+          <PrivateRoute>
+            <AddCar></AddCar>
+          </PrivateRoute>
+        ),
       },
     ],
   },

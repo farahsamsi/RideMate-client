@@ -47,6 +47,11 @@ const Navbar = () => {
       <li>
         <NavLink to="availableCars">Available Cars</NavLink>
       </li>
+      {user && (
+        <li>
+          <NavLink to="addCar">Add Cars</NavLink>
+        </li>
+      )}
       {user ? (
         ""
       ) : (
