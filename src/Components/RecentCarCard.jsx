@@ -1,6 +1,6 @@
 import moment from "moment";
-import React from "react";
-import { FaCar, FaSuitcase, FaUser } from "react-icons/fa";
+import PropTypes from "prop-types";
+import { FaCar, FaUser } from "react-icons/fa";
 
 const RecentCarCard = ({ car }) => {
   const {
@@ -55,6 +55,10 @@ const RecentCarCard = ({ car }) => {
       </div>
     </div>
   );
+};
+
+RecentCarCard.propTypes = {
+  car: PropTypes.object,
 };
 
 export default RecentCarCard;

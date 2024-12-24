@@ -1,9 +1,11 @@
 import moment from "moment";
 // import { useState } from "react";
 import { FaCar, FaUser, FaSuitcase } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const CarCard = ({ car, toggleLayout }) => {
   const {
+    _id,
     userName,
     userEmail,
     carModel,
@@ -38,7 +40,7 @@ const CarCard = ({ car, toggleLayout }) => {
           >
             {carModel}
           </h2>
-          <div className="md:flex items-center gap-2 text-gray-600 text-sm my-2">
+          <div className="lg:flex items-center gap-2 text-gray-600 text-sm my-2">
             <div className="flex items-center gap-1">
               <FaUser /> <span> {moment(datePosted).format("MMM Do YY")}</span>
             </div>
@@ -52,7 +54,9 @@ const CarCard = ({ car, toggleLayout }) => {
           </div>
 
           <div className="card-actions flex justify-between items-center mt-4">
-            <button className="btn bg-primary">Details</button>
+            <Link to={`/cars/${_id}`}>
+              <button className="btn bg-primary">Book Now</button>
+            </Link>
             <div className="text-xl font-bold text-orange-500">
               $ {dailyPrice}/day
             </div>

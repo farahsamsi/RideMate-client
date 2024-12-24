@@ -1,13 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Components/AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 
-const AddCar = () => {
+const UpdateModal = ({ carId }) => {
   const { user } = useContext(AuthContext);
+
   const [availability, setAvailability] = useState("");
   const [avaiLable, setAvaiLable] = useState(true);
-  const navigate = useNavigate();
 
   const handleAvailabilityChange = (e) => {
     if (e.target.value == "Available") {
@@ -19,8 +18,16 @@ const AddCar = () => {
     }
   };
 
+  const [car, setCar] = useState({});
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_url}/cars/${carId}`)
+      .then((res) => res.json())
+      .then((data) => setCar(data));
+  }, [carId]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("clicked update");
 
     const form = e.target;
     const userName = form.userName.value;
@@ -37,7 +44,7 @@ const AddCar = () => {
     const datePosted = new Date();
     let bookingCount = 0;
 
-    const carData = {
+    const carUpdateData = {
       userName,
       userEmail,
       carModel,
@@ -52,44 +59,37 @@ const AddCar = () => {
       datePosted,
     };
 
-    // console.log(carData);
+    console.log(carUpdateData);
 
-    fetch(`${import.meta.env.VITE_url}/cars`, {
-      method: "POST",
+    // update coffee data to the server
+    fetch(`${import.meta.env.VITE_url}/cars/${carId}`, {
+      method: "PUT",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(carData),
+      body: JSON.stringify(carUpdateData),
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.insertedId) {
+        form.reset();
+        if (data.modifiedCount) {
           Swal.fire({
             title: "Success",
-            text: "Car added successfully",
+            text: "Review updated successfully",
             icon: "success",
             confirmButtonText: "Cool",
           });
-          navigate(`/myCars/${user?.email}`);
         }
-        form.reset();
       });
   };
 
   return (
-    <div className="w-11/12 container mx-auto bg-[#F4F3F0]">
-      <div className={`py-5 md:py-10 mb-6 md:mb-9 `}>
-        <div className="w-10/12 mx-auto">
-          <div className="text-center">
-            <h1 className={`text-2xl lg:text-5xl font-bold `}>
-              Add Your Car to RideMate
-            </h1>
-            <p className="md:max-w-[930px] mx-auto my-4 md:my-6">
-              Expand Your Reach – List your car on RideMate and connect with
-              renters. Earn effortlessly while sharing your vehicle with trusted
-              users.
-            </p>
-          </div>
+    <div>
+      {/* You can open the modal using document.getElementById('ID').showModal() method */}
+
+      <dialog id="my_modal_4" className="modal">
+        <div className="modal-box w-11/12 max-w-5xl bg-[#F4F3F0]">
+          <h1 className={`text-2xl text-center font-bold `}>Update Your Car</h1>
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* row name and email */}
             <div className="grid md:grid-cols-2 gap-4">
@@ -134,6 +134,7 @@ const AddCar = () => {
                 </label>
                 <input
                   name="carModel"
+                  defaultValue={car.carModel}
                   type="text"
                   placeholder="Enter Car Model"
                   className="input w-full"
@@ -148,6 +149,7 @@ const AddCar = () => {
                 </label>
                 <input
                   name="dailyPrice"
+                  defaultValue={car.dailyPrice}
                   type="number"
                   placeholder="Enter Daily Rental Price"
                   className="input w-full"
@@ -162,6 +164,7 @@ const AddCar = () => {
                 </label>
                 <input
                   name="regNo"
+                  defaultValue={car.regNo}
                   type="text"
                   placeholder="Enter Vehicle Registration Number"
                   className="input w-full"
@@ -180,6 +183,7 @@ const AddCar = () => {
                 </label>
                 <textarea
                   name="description"
+                  defaultValue={car.description}
                   type="text"
                   placeholder="Write description for Your Vehicle"
                   className="textarea input w-full"
@@ -194,8 +198,9 @@ const AddCar = () => {
                 </label>
                 <textarea
                   name="features"
+                  defaultValue={car.features}
                   type="text"
-                  placeholder="Write Features of Your Vehicle and separate them using comma"
+                  placeholder="Write Features of Your Vehicle"
                   className="textarea input w-full"
                   required
                 />
@@ -212,6 +217,7 @@ const AddCar = () => {
                 </label>
                 <input
                   name="vehiclePhotoURL"
+                  defaultValue={car.vehiclePhotoURL}
                   type="text"
                   placeholder="Enter Vehicle Photo URL"
                   className="input w-full"
@@ -229,6 +235,7 @@ const AddCar = () => {
                 </label>
                 <input
                   name="location"
+                  defaultValue={car.location}
                   type="text"
                   placeholder="Enter Location"
                   className="input w-full"
@@ -241,13 +248,7 @@ const AddCar = () => {
                     Availability
                   </span>
                 </label>
-                {/* <input
-                  name="available"
-                  type="text"
-                  placeholder="Enter Location"
-                  className="input w-full"
-                  required
-                /> */}
+
                 <select
                   name="available"
                   className="input w-full"
@@ -270,14 +271,21 @@ const AddCar = () => {
                 type="submit"
                 className={`btn bg-primary text-xl w-full `}
               >
-                Add Car
+                Update Car
               </button>
             </div>
           </form>
+
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button, it will close the modal */}
+              <button className="btn">Close</button>
+            </form>
+          </div>
         </div>
-      </div>
+      </dialog>
     </div>
   );
 };
 
-export default AddCar;
+export default UpdateModal;
