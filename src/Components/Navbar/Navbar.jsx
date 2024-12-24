@@ -45,18 +45,18 @@ const Navbar = () => {
         <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink to="availableCars">Available Cars</NavLink>
+        <NavLink to="/availableCars">Available Cars</NavLink>
       </li>
       {user && (
         <li>
-          <NavLink to="addCar">Add Cars</NavLink>
+          <NavLink to="/addCar">Add Cars</NavLink>
         </li>
       )}
       {user ? (
         ""
       ) : (
         <li>
-          <NavLink to="login">Login</NavLink>
+          <NavLink to="/login">Login</NavLink>
         </li>
       )}
     </>
@@ -68,7 +68,7 @@ const Navbar = () => {
         <Link to="/">Home</Link>
       </li>
       <li>
-        <a>Settings</a>
+        <Link to={`/myCars/${user?.email}`}>My Cars</Link>
       </li>
       <li onClick={signOutBtn}>
         <a>Logout</a>
@@ -123,7 +123,11 @@ const Navbar = () => {
                 className="btn btn-ghost btn-circle avatar"
               >
                 <div className="w-11 rounded-full">
-                  <img alt={newUser?.displayName} src={newUser?.photoURL} />
+                  <img
+                    referrerPolicy="no-referrer"
+                    alt={newUser?.displayName}
+                    src={newUser?.photoURL}
+                  />
                 </div>
               </div>
               <ul

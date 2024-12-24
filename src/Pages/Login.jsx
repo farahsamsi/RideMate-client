@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Components/AuthProvider/AuthProvider";
 import { toast } from "react-toastify";
 import { FaEyeSlash, FaRegEye } from "react-icons/fa";
@@ -14,9 +14,6 @@ const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   // const [error, setError] = useState('');
-
-  const location = useLocation();
-  console.log(location);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -27,7 +24,7 @@ const Login = () => {
 
     handleLogin(email, password)
       .then(() => {
-        navigate(location?.state ? location.state : "/");
+        navigate("/");
         toast.success("Successfully Logged in");
       })
       .catch((err) => {

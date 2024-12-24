@@ -1,11 +1,14 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../Components/AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const AddCar = () => {
   const { user } = useContext(AuthContext);
   const [availability, setAvailability] = useState("");
   const [avaiLable, setAvaiLable] = useState(true);
+  const navigate = useNavigate();
+
   const handleAvailabilityChange = (e) => {
     if (e.target.value == "Available") {
       setAvailability(e.target.value);
@@ -67,6 +70,7 @@ const AddCar = () => {
             icon: "success",
             confirmButtonText: "Cool",
           });
+          navigate(`/myCars/${user?.email}`);
         }
         form.reset();
       });

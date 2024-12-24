@@ -1,8 +1,8 @@
 import moment from "moment";
-// import { useState } from "react";
-import { FaCar, FaUser, FaSuitcase } from "react-icons/fa";
+import React from "react";
+import { FaCar, FaSuitcase, FaUser } from "react-icons/fa";
 
-const CarCard = ({ car, toggleLayout }) => {
+const RecentCarCard = ({ car }) => {
   const {
     userName,
     userEmail,
@@ -17,42 +17,36 @@ const CarCard = ({ car, toggleLayout }) => {
     available,
     datePosted,
   } = car || {};
+
   return (
     <div
-      className={`bg-white rounded-xl shadow-lg p-4 mx-2 mb-4 ${
-        toggleLayout ? "" : "md:grid grid-cols-2"
-      }`}
+      className={`bg-white rounded-xl shadow-lg p-4 mx-2 mb-4 hover:scale-105 transition ease-in-out`}
     >
       <img
         src={vehiclePhotoURL}
         alt={carModel}
-        className="w-full rounded-t-xl"
+        className="w-full rounded-xl pb-3"
       />
       <div className="card-body p-0 items-center text-center">
         <div className="flex-1 flex flex-col items-center lg:justify-center ">
           <div className="flex flex-col items-center "></div>
-          <h2
-            className={`${
-              toggleLayout ? "text-2xl" : "card-title lg:text-4xl"
-            }`}
-          >
-            {carModel}
-          </h2>
+          <h2 className={`text-2xl`}>{carModel}</h2>
           <div className="md:flex items-center gap-2 text-gray-600 text-sm my-2">
             <div className="flex items-center gap-1">
-              <FaUser /> <span> {moment(datePosted).format("MMM Do YY")}</span>
+              <FaUser /> <span>Added {moment(datePosted).fromNow()}</span>
             </div>
+
             <div className="flex items-center gap-1">
-              <FaCar /> <span>{location}</span>{" "}
-            </div>
-            <div className="flex items-center gap-1">
-              <FaSuitcase />
-              <span> {available ? "Available" : "Unavailable"} </span>
+              <FaCar />
+              <span className={`${available ? "badge bg-primary" : ""}`}>
+                {" "}
+                {available ? "Available" : "Unavailable"}{" "}
+              </span>
             </div>
           </div>
 
           <div className="card-actions flex justify-between items-center mt-4">
-            <button className="btn bg-primary">Details</button>
+            {/* <button className="btn bg-primary">Details</button> */}
             <div className="text-xl font-bold text-orange-500">
               $ {dailyPrice}/day
             </div>
@@ -63,4 +57,4 @@ const CarCard = ({ car, toggleLayout }) => {
   );
 };
 
-export default CarCard;
+export default RecentCarCard;

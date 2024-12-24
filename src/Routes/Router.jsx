@@ -7,6 +7,7 @@ import Register from "../Pages/Register";
 import Error from "../Pages/Error";
 import PrivateRoute from "./PrivateRoute";
 import AddCar from "../Pages/AddCar";
+import MyCars from "../Pages/MyCars";
 
 const Router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const Router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+        loader: () => fetch(`${import.meta.env.VITE_url}/cars`),
       },
       {
         path: "availableCars",
@@ -38,6 +40,16 @@ const Router = createBrowserRouter([
             <AddCar></AddCar>
           </PrivateRoute>
         ),
+      },
+      {
+        path: "myCars/:email",
+        element: (
+          <PrivateRoute>
+            <MyCars></MyCars>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_url}/cars/myCars/${params.email}`),
       },
     ],
   },
