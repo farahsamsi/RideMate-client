@@ -44,7 +44,7 @@ const CarCard = ({ car, toggleLayout }) => {
               <FaUser /> <span> {moment(datePosted).format("MMM Do YY")}</span>
             </div>
             <div className="flex items-center gap-1">
-              <FaCar /> <span>{regNo}</span>{" "}
+              <FaCar /> <span>{location}</span>{" "}
             </div>
             <div className="flex items-center gap-1">
               <FaSuitcase />
