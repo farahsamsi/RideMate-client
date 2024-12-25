@@ -70,6 +70,9 @@ const Navbar = () => {
       <li>
         <Link to={`/myCars/${user?.email}`}>My Cars</Link>
       </li>
+      <li>
+        <Link to={`/myBookings/${user?.email}`}>My Bookings</Link>
+      </li>
       <li onClick={signOutBtn}>
         <a>Logout</a>
       </li>

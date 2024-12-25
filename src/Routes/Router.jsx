@@ -9,6 +9,7 @@ import PrivateRoute from "./PrivateRoute";
 import AddCar from "../Pages/AddCar";
 import MyCars from "../Pages/MyCars";
 import CarDetails from "../Pages/CarDetails";
+import MyBookings from "../Pages/MyBookings";
 
 const Router = createBrowserRouter([
   {
@@ -51,6 +52,18 @@ const Router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_url}/cars/myCars/${params.email}`),
+      },
+      {
+        path: "myBookings/:email",
+        element: (
+          <PrivateRoute>
+            <MyBookings></MyBookings>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(
+            `${import.meta.env.VITE_url}/carsBooking/myBookings/${params.email}`
+          ),
       },
       {
         path: "cars/:id",

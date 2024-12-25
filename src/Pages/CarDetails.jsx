@@ -38,33 +38,46 @@ const CarDetails = () => {
   const [endDate, setEndDate] = useState("");
   const [totalPrice, setTotalPrice] = useState(dailyPrice);
   // Get today's date in the format YYYY-MM-DD
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().slice(0, 16);
 
   useEffect(() => {
     if (startDate && endDate) {
       const start = new Date(startDate);
       const end = new Date(endDate);
-      const diffInDays = 1 + Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+      const diffInDays = 1 + (end - start) / (1000 * 60 * 60 * 24);
       const total = diffInDays * dailyPrice;
-      console.log("difference in days", diffInDays, "total:", total);
+      // console.log("difference in days", diffInDays, "total:", total);
       setTotalPrice(total);
     }
   }, [dailyPrice, endDate, startDate]);
 
   const handleBookNow = (e) => {
     e.preventDefault();
-    // const form = e.target;
-    const start = startDate;
-    const end = endDate;
+    const form = e.target;
+    const startDateTime = new Date(startDate);
+    const endDateTime = new Date(endDate);
     const subTotal = totalPrice;
-    console.log(start, end, subTotal);
+    const car_id = _id;
+    const bookingStatus = "Pending";
+    const bookedBy = user?.email;
+    const newCarBooking = {
+      startDateTime,
+      endDateTime,
+      subTotal,
+      car_id,
+      vehiclePhotoURL,
+      carModel,
+      bookedBy,
+      bookingStatus,
+    };
+
     Swal.fire({
       title: "Your Booking Summary",
       html: `Car: ${carModel} <br> 
       Location: ${location} <br>
       Car Registration Number: ${regNo} <br>
-      Start Date: ${startDate} <br>
-      End Date: ${endDate} <br>
+      Start Date: ${moment(startDate).format("lll")}  <br>
+      End Date: ${moment(endDate).format("lll")} <br>
       <strong>Total Bill: ${totalPrice}</strong>
       `,
       showCancelButton: true,
@@ -73,11 +86,31 @@ const CarDetails = () => {
       confirmButtonText: "Yes, Confirm Booking",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Confirmed",
-          text: "Your Car has been booked successfully.",
-          icon: "success",
-        });
+        fetch(`${import.meta.env.VITE_url}/carsBooking`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(newCarBooking),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.insertedId) {
+              Swal.fire({
+                title: "Success",
+                text: "Car added successfully",
+                icon: "success",
+                confirmButtonText: "Cool",
+              });
+              // navigate(`/myCars/${user?.email}`);
+            }
+            form.reset();
+          });
+        // Swal.fire({
+        //   title: "Confirmed",
+        //   text: "Your Car has been booked successfully.",
+        //   icon: "success",
+        // });
       }
     });
   };
@@ -223,7 +256,7 @@ const CarDetails = () => {
                       </label>
                       <input
                         name="startDate"
-                        type="date"
+                        type="datetime-local"
                         value={startDate}
                         onChange={(e) => {
                           setStartDate(e.target.value);
@@ -243,7 +276,7 @@ const CarDetails = () => {
                       </label>
                       <input
                         name="endDate"
-                        type="date"
+                        type="datetime-local"
                         value={endDate}
                         onChange={(e) => {
                           setEndDate(e.target.value);
