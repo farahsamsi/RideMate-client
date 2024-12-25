@@ -90,27 +90,33 @@ const MyCars = () => {
         </p>
       </div>
       <UpdateModal carId={updateCarId}></UpdateModal>
-      <div className="mb-6 w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Sort  */}
-        <div className="flex flex-col justify-center items-center">
-          <label className="label">
-            <span className="label-text font-normal ">Sort Cars by Date</span>
-          </label>
-          <button className="btn btn-outline" onClick={sortByDate}>
-            Sort by Date (
-            {dateOrder === "newest" ? "Newest First" : "Oldest First"})
-          </button>
+      {myCars.length === 0 ? (
+        ""
+      ) : (
+        <div className="mb-6 w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Sort  */}
+          <div className="flex flex-col justify-center items-center">
+            <label className="label">
+              <span className="label-text font-normal ">Sort Cars by Date</span>
+            </label>
+            <button className="btn btn-outline" onClick={sortByDate}>
+              Sort by Date (
+              {dateOrder === "newest" ? "Newest First" : "Oldest First"})
+            </button>
+          </div>
+          <div className="flex flex-col justify-center items-center">
+            <label className="label">
+              <span className="label-text font-normal ">
+                Sort Cars by Price
+              </span>
+            </label>
+            <button className="btn btn-outline" onClick={sortByPrice}>
+              Sort by Price (
+              {priceOrder === "lowest" ? "Lowest First" : "Highest First"})
+            </button>
+          </div>
         </div>
-        <div className="flex flex-col justify-center items-center">
-          <label className="label">
-            <span className="label-text font-normal ">Sort Cars by Price</span>
-          </label>
-          <button className="btn btn-outline" onClick={sortByPrice}>
-            Sort by Price (
-            {priceOrder === "lowest" ? "Lowest First" : "Highest First"})
-          </button>
-        </div>
-      </div>
+      )}
       <div>
         {myCars.length === 0 ? (
           <div className="md:w-8/12 mx-auto flex flex-col justify-center items-center text-center gap-4 mb-5 ">
@@ -138,6 +144,7 @@ const MyCars = () => {
                     <th>Daily Rental Price</th>
                     <th>Availability</th>
                     <th>Date Added</th>
+                    <th>Booking Count</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -178,6 +185,7 @@ const MyCars = () => {
                         </span>
                       </td>
                       <th>{moment(car?.datePosted).format("MMM Do YY")}</th>
+                      <th>{car?.bookingCount}</th>
                       <th>
                         <div className="flex flex-col lg:flex-row items-center justify-center gap-1">
                           <button

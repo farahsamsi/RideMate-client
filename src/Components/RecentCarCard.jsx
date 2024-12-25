@@ -1,6 +1,7 @@
 import moment from "moment";
 import PropTypes from "prop-types";
 import { FaCar, FaUser } from "react-icons/fa";
+import { LuBookmarkCheck } from "react-icons/lu";
 
 const RecentCarCard = ({ car }) => {
   const {
@@ -31,7 +32,7 @@ const RecentCarCard = ({ car }) => {
         <div className="flex-1 flex flex-col items-center lg:justify-center ">
           <div className="flex flex-col items-center "></div>
           <h2 className={`text-2xl`}>{carModel}</h2>
-          <div className="md:flex items-center gap-2 text-gray-600 text-sm my-2">
+          <div className=" space-y-2 text-gray-600 text-sm my-2">
             <div className="flex items-center gap-1">
               <FaUser /> <span>Added {moment(datePosted).fromNow()}</span>
             </div>
@@ -40,8 +41,13 @@ const RecentCarCard = ({ car }) => {
               <FaCar />
               <span className={`${available ? "badge bg-primary" : ""}`}>
                 {" "}
-                {available ? "Available" : "Unavailable"}{" "}
+                {available
+                  ? "Available For Immediate Booking"
+                  : "Unavailable"}{" "}
               </span>
+            </div>
+            <div className="flex items-center gap-1">
+              <LuBookmarkCheck /> <span>Booking Count: {bookingCount}</span>
             </div>
           </div>
 

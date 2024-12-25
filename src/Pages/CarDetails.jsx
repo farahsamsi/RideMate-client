@@ -1,13 +1,18 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaRegClock } from "react-icons/fa";
-import { FaRegStarHalfStroke } from "react-icons/fa6";
 import { IoMdPricetags } from "react-icons/io";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../Components/AuthProvider/AuthProvider";
 import { SiBigcartel } from "react-icons/si";
 import { VscOpenPreview } from "react-icons/vsc";
-import { MdAlternateEmail } from "react-icons/md";
+import {
+  MdAlternateEmail,
+  MdEventAvailable,
+  MdOutlineLocationOn,
+} from "react-icons/md";
 import moment from "moment";
+import { PiCurrencyDollarFill } from "react-icons/pi";
+import Swal from "sweetalert2";
 
 const CarDetails = () => {
   const { user } = useContext(AuthContext);
@@ -28,7 +33,55 @@ const CarDetails = () => {
     datePosted,
   } = car || {};
 
-  console.log(features);
+  // booking related functions
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [totalPrice, setTotalPrice] = useState(dailyPrice);
+  // Get today's date in the format YYYY-MM-DD
+  const today = new Date().toISOString().split("T")[0];
+
+  useEffect(() => {
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const diffInDays = 1 + Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+      const total = diffInDays * dailyPrice;
+      console.log("difference in days", diffInDays, "total:", total);
+      setTotalPrice(total);
+    }
+  }, [dailyPrice, endDate, startDate]);
+
+  const handleBookNow = (e) => {
+    e.preventDefault();
+    // const form = e.target;
+    const start = startDate;
+    const end = endDate;
+    const subTotal = totalPrice;
+    console.log(start, end, subTotal);
+    Swal.fire({
+      title: "Your Booking Summary",
+      html: `Car: ${carModel} <br> 
+      Location: ${location} <br>
+      Car Registration Number: ${regNo} <br>
+      Start Date: ${startDate} <br>
+      End Date: ${endDate} <br>
+      <strong>Total Bill: ${totalPrice}</strong>
+      `,
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Confirm Booking",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Confirmed",
+          text: "Your Car has been booked successfully.",
+          icon: "success",
+        });
+      }
+    });
+  };
+
   const renderFeatures = (featuresString) => {
     if (!featuresString) return null; // Handle empty or undefined string
     const featuresArray = featuresString
@@ -82,29 +135,36 @@ const CarDetails = () => {
                     {/* row 3 */}
                     <tr>
                       <td className="text-primary text-xl">
-                        <FaRegStarHalfStroke />
+                        <PiCurrencyDollarFill />
                       </td>
                       <td className={`font-bold `}>Price :</td>
                       <td>${dailyPrice}/day</td>
+                    </tr>
+                    {/* row 4 */}
+                    <tr>
+                      <td className="text-primary text-xl">
+                        <MdEventAvailable />
+                      </td>
+                      <td className={`font-bold `}>Availability :</td>
+                      <td>
+                        {available === true ? "Available" : "Unavailable"}
+                      </td>
+                    </tr>
+                    {/* row 4 */}
+                    <tr>
+                      <td className="text-primary text-xl">
+                        <MdOutlineLocationOn />
+                      </td>
+                      <td className={`font-bold `}>Location :</td>
+                      <td> {location}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
-            {user && (
-              <div className="flex justify-end">
-                <button
-                  //   onClick={handleWatchList}
-                  className="btn bg-primary "
-                >
-                  <SiBigcartel />
-                  Book Now
-                </button>
-              </div>
-            )}
           </div>
         </div>
-        {/* for game description */}
+        {/*  */}
         <div className="mt-6 space-y-3">
           <h1 className="text-xl lg:text-2xl font-extrabold">
             {carModel} Details:
@@ -131,6 +191,91 @@ const CarDetails = () => {
           </p>
           <p>Description : {description}</p>
         </div>
+        {user ? (
+          <div>
+            <form onSubmit={handleBookNow}>
+              {available ? (
+                <div className="flex justify-end items-center gap-4">
+                  <p className="text-center my-5 text-sm">
+                    Please Fill the Form below before Confirming Booking
+                  </p>
+                  <button
+                    // onClick={handleBookNow}
+                    className="btn bg-primary "
+                  >
+                    <SiBigcartel />
+                    Book Now
+                  </button>
+                </div>
+              ) : (
+                <p className="my-5 text-end text-red-700">
+                  Sorry, This car is not available for Booking
+                </p>
+              )}
+              <div>
+                <div>
+                  <div className="grid lg:grid-cols-2 gap-4">
+                    <div className="">
+                      <label className="label">
+                        <span className="label-text text-xl font-normal ">
+                          Pick Start Date
+                        </span>
+                      </label>
+                      <input
+                        name="startDate"
+                        type="date"
+                        value={startDate}
+                        onChange={(e) => {
+                          setStartDate(e.target.value);
+                        }}
+                        min={today}
+                        max={endDate || ""}
+                        placeholder=""
+                        className="input input-bordered w-full"
+                        required
+                      />
+                    </div>
+                    <div className="">
+                      <label className="label">
+                        <span className="label-text text-xl font-normal ">
+                          Pick End Date
+                        </span>
+                      </label>
+                      <input
+                        name="endDate"
+                        type="date"
+                        value={endDate}
+                        onChange={(e) => {
+                          setEndDate(e.target.value);
+                        }}
+                        min={startDate || today}
+                        placeholder=""
+                        className="input input-bordered w-full"
+                        required
+                      />
+                    </div>
+                    <div className="">
+                      <label className="label">
+                        <span className="label-text text-xl font-normal ">
+                          Total Price: ${totalPrice}
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        ) : (
+          <div className="flex justify-end items-center gap-4">
+            <p className="text-center my-5 text-sm">
+              Please Login to Book Your Ride
+            </p>
+            <Link to="/login">
+              <button className="btn bg-primary ">Login</button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

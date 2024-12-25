@@ -55,7 +55,7 @@ const CarCard = ({ car, toggleLayout }) => {
 
           <div className="card-actions flex justify-between items-center mt-4">
             <Link to={`/cars/${_id}`}>
-              <button className="btn bg-primary">Book Now</button>
+              <button className="btn bg-primary">See Details</button>
             </Link>
             <div className="text-xl font-bold text-orange-500">
               $ {dailyPrice}/day

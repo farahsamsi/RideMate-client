@@ -28,7 +28,7 @@ const Navbar = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         handleLogOut().then(() => {
-          toast.info("Successfully Signed Out");
+          // toast.info("Successfully Signed Out");
           navigate("/");
           Swal.fire({
             text: "Your are successfully signed out from RideMate",

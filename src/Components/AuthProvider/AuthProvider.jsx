@@ -14,7 +14,6 @@ import { createContext, useEffect, useState } from "react";
 import { GoogleAuthProvider } from "firebase/auth";
 
 import app from "../../Firebase/firebase.config";
-import { toast } from "react-toastify";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -46,12 +45,12 @@ const AuthProvider = ({ children }) => {
 
   // log out function
   const handleLogOut = () => {
-    signOut(auth)
-      .then(() => {
-        // console.log(data);
-        toast.info("Successfully log out");
-      })
-      .catch((error) => console.log(error.message));
+    return signOut(auth);
+    // .then(() => {
+    //   // console.log(data);
+    //   toast.info("Successfully log out");
+    // })
+    // .catch((error) => console.log(error.message));
   };
 
   // update profile
