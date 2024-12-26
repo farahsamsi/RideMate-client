@@ -1,45 +1,14 @@
 import moment from "moment";
 import { useState } from "react";
-import { CiEdit } from "react-icons/ci";
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import { SlCalender } from "react-icons/sl";
 import { Link, useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
+import MyBookingRow from "../Components/MyBookingRow";
 
 const MyBookings = () => {
   const myBookingsLoaded = useLoaderData();
   const [myBookings, setMyBookings] = useState(myBookingsLoaded);
-
-  const handleDelete = (_id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Cancel it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fetch(`${import.meta.env.VITE_url}/carsBooking/${_id}`, {
-          method: "DELETE",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.deletedCount > 0) {
-              Swal.fire({
-                title: "Cancel!",
-                text: "Your Booking has been Canceled.",
-                icon: "success",
-              });
-              const remaining = myBookingsLoaded.filter(
-                (car) => car._id !== _id
-              );
-              setMyBookings(remaining);
-            }
-          });
-      }
-    });
-  };
 
   return (
     <div className="mb-4 md:mb-6 lg:mb-20 container mx-auto">
@@ -86,62 +55,12 @@ const MyBookings = () => {
                 <tbody>
                   {/* row  */}
                   {myBookings.map((car) => (
-                    <tr className="hover" key={car._id}>
-                      <td>
-                        <div className="flex items-center gap-3">
-                          <div className="avatar">
-                            <div className="mask mask-squircle h-12 w-12">
-                              <img
-                                src={car?.vehiclePhotoURL}
-                                alt={car?.carModel}
-                              />
-                            </div>
-                          </div>
-                          <div>
-                            <div className="font-bold">{car?.carModel}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <span className="badge badge-ghost">
-                          ${car?.subTotal}
-                        </span>
-                      </td>
-                      <td>
-                        <span
-                          className={`badge badge-ghost 
-                            ${car?.bookingStatus === "Pending" && "bg-blue-400"}
-                            ${
-                              car?.bookingStatus === "Confirm" && "bg-green-400"
-                            }
-                            ${car?.bookingStatus === "Cancel" && "bg-red-400"}
-                            `}
-                        >
-                          {car?.bookingStatus}
-                        </span>
-                      </td>
-                      <th>
-                        From : {moment(car?.startDateTime).format("lll")} <br />
-                        To : {moment(car?.endDateTime).format("lll")}
-                      </th>
-
-                      <th>
-                        <div className="flex flex-col  items-center justify-center gap-1">
-                          <button
-                            // onClick={() => handleModal(car?._id)}
-                            className="btn  bg-primary btn-sm"
-                          >
-                            <CiEdit />
-                          </button>
-                          <button
-                            onClick={() => handleDelete(car?._id)}
-                            className="btn  text-white bg-red-600 btn-sm"
-                          >
-                            <MdOutlineDeleteOutline /> Cancel
-                          </button>
-                        </div>
-                      </th>
-                    </tr>
+                    <MyBookingRow
+                      key={car._id}
+                      car={car}
+                      setMyBookings={setMyBookings}
+                      myBookings={myBookings}
+                    ></MyBookingRow>
                   ))}
                 </tbody>
               </table>

@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Components/AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
+import PropTypes from "prop-types";
 
-const UpdateModal = ({ carId }) => {
+const UpdateModal = ({ carId, fetchMyCars }) => {
   const { user } = useContext(AuthContext);
 
   const [availability, setAvailability] = useState("");
@@ -61,7 +62,7 @@ const UpdateModal = ({ carId }) => {
 
     console.log(carUpdateData);
 
-    // update coffee data to the server
+    // update car data to the server
     fetch(`${import.meta.env.VITE_url}/cars/${carId}`, {
       method: "PUT",
       headers: {
@@ -71,11 +72,14 @@ const UpdateModal = ({ carId }) => {
     })
       .then((res) => res.json())
       .then((data) => {
+        document.getElementById("my_modal_4").close();
+        fetchMyCars();
         form.reset();
+
         if (data.modifiedCount) {
           Swal.fire({
             title: "Success",
-            text: "Review updated successfully",
+            text: "Car updated successfully",
             icon: "success",
             confirmButtonText: "Cool",
           });
@@ -279,13 +283,18 @@ const UpdateModal = ({ carId }) => {
           <div className="modal-action">
             <form method="dialog">
               {/* if there is a button, it will close the modal */}
-              <button className="btn">Close</button>
+              <button className="btn">Cancel</button>
             </form>
           </div>
         </div>
       </dialog>
     </div>
   );
+};
+
+UpdateModal.propTypes = {
+  carId: PropTypes.number,
+  fetchMyCars: PropTypes.function,
 };
 
 export default UpdateModal;

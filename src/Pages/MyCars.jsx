@@ -1,8 +1,8 @@
 import moment from "moment";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
 import { MdOutlineDeleteOutline } from "react-icons/md";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Components/AuthProvider/AuthProvider";
 import { toast } from "react-toastify";
@@ -10,12 +10,23 @@ import UpdateModal from "./UpdateModal";
 
 const MyCars = () => {
   const { user } = useContext(AuthContext);
-  const myCarsLoaded = useLoaderData();
-  const [myCars, setMyCars] = useState(myCarsLoaded);
+  const { email } = useParams();
+  // const myCarsLoaded = useLoaderData();
+  const [myCars, setMyCars] = useState([]);
   const [updateCarId, setUpdateCarId] = useState("");
 
   const [dateOrder, setDateOrder] = useState("newest");
   const [priceOrder, setPriceOrder] = useState("lowest");
+
+  useEffect(() => {
+    fetchMyCars();
+  }, [email]);
+
+  const fetchMyCars = async () => {
+    await fetch(`${import.meta.env.VITE_url}/cars/myCars/${email}`)
+      .then((res) => res.json())
+      .then((data) => setMyCars(data));
+  };
 
   // Sort by Date Added
   const sortByDate = () => {
@@ -89,7 +100,7 @@ const MyCars = () => {
           effortlessly.
         </p>
       </div>
-      <UpdateModal carId={updateCarId}></UpdateModal>
+      <UpdateModal carId={updateCarId} fetchMyCars={fetchMyCars}></UpdateModal>
       {myCars.length === 0 ? (
         ""
       ) : (

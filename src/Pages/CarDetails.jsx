@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { FaRegClock } from "react-icons/fa";
 import { IoMdPricetags } from "react-icons/io";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Components/AuthProvider/AuthProvider";
 import { SiBigcartel } from "react-icons/si";
 import { VscOpenPreview } from "react-icons/vsc";
@@ -13,9 +13,11 @@ import {
 import moment from "moment";
 import { PiCurrencyDollarFill } from "react-icons/pi";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 const CarDetails = () => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const car = useLoaderData();
   const {
     _id,
@@ -53,6 +55,7 @@ const CarDetails = () => {
 
   const handleBookNow = (e) => {
     e.preventDefault();
+
     const form = e.target;
     const startDateTime = new Date(startDate);
     const endDateTime = new Date(endDate);
@@ -68,9 +71,12 @@ const CarDetails = () => {
       vehiclePhotoURL,
       carModel,
       bookedBy,
+      dailyPrice,
       bookingStatus,
     };
 
+    if (user?.email === userEmail)
+      return toast.error("It is your car. You do not have to book this.");
     Swal.fire({
       title: "Your Booking Summary",
       html: `Car: ${carModel} <br> 
@@ -102,15 +108,10 @@ const CarDetails = () => {
                 icon: "success",
                 confirmButtonText: "Cool",
               });
-              // navigate(`/myCars/${user?.email}`);
+              navigate(`/myBookings/${user?.email}`);
+              form.reset();
             }
-            form.reset();
           });
-        // Swal.fire({
-        //   title: "Confirmed",
-        //   text: "Your Car has been booked successfully.",
-        //   icon: "success",
-        // });
       }
     });
   };

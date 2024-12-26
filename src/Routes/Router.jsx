@@ -50,8 +50,8 @@ const Router = createBrowserRouter([
             <MyCars></MyCars>
           </PrivateRoute>
         ),
-        loader: ({ params }) =>
-          fetch(`${import.meta.env.VITE_url}/cars/myCars/${params.email}`),
+        // loader: ({ params }) =>
+        //   fetch(`${import.meta.env.VITE_url}/cars/myCars/${params.email}`),
       },
       {
         path: "myBookings/:email",
