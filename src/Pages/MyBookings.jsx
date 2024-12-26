@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 
 import MyBookingRow from "../Components/MyBookingRow";
 import { Bar, BarChart, CartesianGrid, Cell, XAxis, YAxis } from "recharts";
-import { Legend, Tooltip } from "chart.js";
+import { Tooltip } from "chart.js";
 import Swal from "sweetalert2";
 import moment from "moment";
 import { SlCalender } from "react-icons/sl";
@@ -180,7 +180,7 @@ const MyBookings = () => {
                           {car?.bookingStatus}
                         </span>
                       </td>
-                      <th>
+                      <th className="font-normal">
                         From : {moment(car?.startDateTime).format("lll")} <br />
                         To : {moment(car?.endDateTime).format("lll")}
                       </th>
@@ -191,13 +191,15 @@ const MyBookings = () => {
                             onClick={() => handleModify(car?._id)}
                             className="btn  bg-blue-500 btn-sm"
                           >
-                            <SlCalender /> Modify Date
+                            <SlCalender />{" "}
+                            <span className="hidden lg:flex">Modify Date</span>
                           </button>
                           <button
                             onClick={() => handleDelete(car?._id)}
                             className="btn  text-white bg-red-600 btn-sm"
                           >
-                            <MdOutlineDeleteOutline /> Cancel
+                            <MdOutlineDeleteOutline />{" "}
+                            <span className="hidden lg:flex">Cancel</span>
                           </button>
                         </div>
                       </th>
