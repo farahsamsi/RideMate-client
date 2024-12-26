@@ -32,6 +32,8 @@ const MyBookingRow = ({ carId, fetchMyBookingsData }) => {
     }
   }, [car?.dailyPrice, endDate, startDate]);
 
+  const [updateBooking, setUpdateBooking] = useState({});
+
   const handleUpdateNow = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -43,39 +45,52 @@ const MyBookingRow = ({ carId, fetchMyBookingsData }) => {
       endDateTime,
       subTotal,
     };
-    console.log(updateCarBooking);
+    setUpdateBooking(updateCarBooking);
+    document.getElementById("booking_modify_modal").close();
 
-    // update car data to the server
-    fetch(`${import.meta.env.VITE_url}/carsBooking/${carId}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(updateCarBooking),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        document.getElementById("booking_modify_modal").close();
-        fetchMyBookingsData();
-        setStartDate("");
-        setEndDate("");
-        setTotalPrice(0);
+    Swal.fire({
+      title: "Confirm Update?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Update Booking!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // update car data to the server
+        fetch(`${import.meta.env.VITE_url}/carsBooking/${carId}`, {
+          method: "PUT",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(updateCarBooking),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            fetchMyBookingsData();
+            setStartDate("");
+            setEndDate("");
+            setTotalPrice(0);
 
-        if (data.modifiedCount) {
-          Swal.fire({
-            title: "Success",
-            text: "Car Booking updated successfully",
-            icon: "success",
-            confirmButtonText: "Cool",
+            if (data.modifiedCount) {
+              Swal.fire({
+                title: "Success",
+                text: "Car Booking updated successfully",
+                icon: "success",
+                confirmButtonText: "Cool",
+              });
+            }
           });
-        }
-      });
+      }
+    });
   };
 
   return (
     <dialog id="booking_modify_modal" className="modal">
       <div className="modal-box w-11/12 max-w-5xl">
-        <h3 className="font-bold text-lg">Hello! for {car?.carModel} </h3>
+        <h3 className="font-bold text-lg text-center">
+          Update for {car?.carModel}{" "}
+        </h3>
         <div>
           <form onSubmit={handleUpdateNow}>
             <div>
@@ -133,7 +148,7 @@ const MyBookingRow = ({ carId, fetchMyBookingsData }) => {
                     className="btn bg-primary "
                   >
                     <SiBigcartel />
-                    Update Now
+                    Confirm Update
                   </button>
                 </div>
               </div>
@@ -143,7 +158,7 @@ const MyBookingRow = ({ carId, fetchMyBookingsData }) => {
         <div className="modal-action">
           <form method="dialog">
             {/* if there is a button, it will close the modal */}
-            <button className="btn">Close</button>
+            <button className="btn">Cancel</button>
           </form>
         </div>
       </div>
