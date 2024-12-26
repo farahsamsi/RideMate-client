@@ -48,9 +48,21 @@ const Navbar = () => {
         <NavLink to="/availableCars">Available Cars</NavLink>
       </li>
       {user && (
-        <li>
-          <NavLink to="/addCar">Add Cars</NavLink>
-        </li>
+        <>
+          <li>
+            <NavLink to="/addCar">Add Cars</NavLink>
+          </li>
+
+          <li>
+            <NavLink to={`/myCars/${user?.email}`}>My Cars</NavLink>
+          </li>
+          <li>
+            <NavLink to={`/myBookings/${user?.email}`}>My Bookings</NavLink>
+          </li>
+          <li onClick={signOutBtn}>
+            <a>Logout</a>
+          </li>
+        </>
       )}
       {user ? (
         ""
