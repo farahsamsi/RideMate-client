@@ -3,8 +3,14 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 import { SlCalender } from "react-icons/sl";
 import Swal from "sweetalert2";
 import PropTypes from "prop-types";
+import ModifyBookingModal from "../Pages/ModifyBookingModal";
 
-const MyBookingRow = ({ car, setMyBookings, myBookings }) => {
+const MyBookingRow = ({ car, fetchMyBookingsData }) => {
+  const handleModify = () => {
+    console.log("modify for", car?.carModel);
+    document.getElementById("booking_modify_modal").showModal();
+  };
+
   const handleDelete = (_id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -27,8 +33,7 @@ const MyBookingRow = ({ car, setMyBookings, myBookings }) => {
                 text: "Your Booking has been Canceled.",
                 icon: "success",
               });
-              const remaining = myBookings.filter((car) => car._id !== _id);
-              setMyBookings(remaining);
+              fetchMyBookingsData();
             }
           });
       }
@@ -73,11 +78,12 @@ const MyBookingRow = ({ car, setMyBookings, myBookings }) => {
       <th>
         <div className="flex flex-col  items-center justify-center gap-1">
           <button
-            // onClick={() => handleModify(car)}
+            onClick={() => handleModify()}
             className="btn  bg-blue-500 btn-sm"
           >
             <SlCalender /> Modify Date
           </button>
+          <ModifyBookingModal></ModifyBookingModal>
           <button
             onClick={() => handleDelete(car?._id)}
             className="btn  text-white bg-red-600 btn-sm"
@@ -92,8 +98,7 @@ const MyBookingRow = ({ car, setMyBookings, myBookings }) => {
 
 MyBookingRow.propTypes = {
   car: PropTypes.object,
-  setMyBookings: PropTypes.function,
-  myBookings: PropTypes.array,
+  fetchMyBookingsData: PropTypes.function,
 };
 
 export default MyBookingRow;
