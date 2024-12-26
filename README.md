@@ -6,7 +6,7 @@ The RideMate is a feature-rich, user-centric platform designed to facilitate sea
 
 ## Live URL
 
-[Deployed Website](https://ride-mate.netlify.app/) https://ride-mate.netlify.app/
+[Deployed Website](https://ride-mate.netlify.app) https://ride-mate.netlify.app or https://ridemate-5d791.web.app
 
 ## Purpose
 

@@ -36,7 +36,6 @@ const AvailableCars = () => {
 
   // handleSearchBtn
   const handleSearchBtn = () => {
-    console.log(searchTerm);
     const filteredCars = carsLoaded.filter((car) =>
       `${car?.carModel} ${car?.location}`
         .toLowerCase()

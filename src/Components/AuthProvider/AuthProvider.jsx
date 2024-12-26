@@ -14,6 +14,7 @@ import { createContext, useEffect, useState } from "react";
 import { GoogleAuthProvider } from "firebase/auth";
 
 import app from "../../Firebase/firebase.config";
+import axios from "axios";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -63,13 +64,40 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
+      // if (currentUser) {
+      //   setUser(currentUser);
+      // } else {
+      //   setUser(null);
+      // }
+
+      setUser(currentUser);
+      console.log("capture state", currentUser?.email);
+
+      if (currentUser?.email) {
+        const user = { email: currentUser.email };
+
+        axios
+          .post(`${import.meta.env.VITE_url}/jwt`, user, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            console.log("login token", res.data);
+            setLoading(false);
+          });
       } else {
-        setUser(null);
+        axios
+          .post(
+            `${import.meta.env.VITE_url}/logout`,
+            {},
+            {
+              withCredentials: true,
+            }
+          )
+          .then((res) => {
+            console.log("logout", res.data);
+            setLoading(false);
+          });
       }
-      setLoading(false);
-      console.log("capture state", currentUser);
 
       return () => {
         unSubscribe();

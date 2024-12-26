@@ -7,10 +7,13 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../Components/AuthProvider/AuthProvider";
 import { toast } from "react-toastify";
 import UpdateModal from "./UpdateModal";
+import axios from "axios";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const MyCars = () => {
   const { user } = useContext(AuthContext);
   const { email } = useParams();
+  const axiosSecure = useAxiosSecure();
   // const myCarsLoaded = useLoaderData();
   const [myCars, setMyCars] = useState([]);
   const [updateCarId, setUpdateCarId] = useState("");
@@ -23,9 +26,15 @@ const MyCars = () => {
   }, [email]);
 
   const fetchMyCars = async () => {
-    await fetch(`${import.meta.env.VITE_url}/cars/myCars/${email}`)
-      .then((res) => res.json())
-      .then((data) => setMyCars(data));
+    // await fetch(`${import.meta.env.VITE_url}/cars/myCars/${email}`)
+    //   .then((res) => res.json())
+    //   .then((data) => setMyCars(data));
+
+    // axios
+    //   .get(`${import.meta.env.VITE_url}/cars/myCars/${email}`)
+    //   .then((res) => setMyCars(res.data));
+
+    axiosSecure.get(`/cars/myCars/${email}`).then((res) => setMyCars(res.data));
   };
 
   // Sort by Date Added
@@ -54,7 +63,6 @@ const MyCars = () => {
 
   // update call
   const handleModal = (id) => {
-    console.log(id);
     setUpdateCarId(id);
     document.getElementById("my_modal_4").showModal();
   };

@@ -26,7 +26,6 @@ const MyBookings = () => {
   };
 
   const handleModify = (_id) => {
-    console.log("modify for", _id);
     setUpdateBookingId(_id);
     document.getElementById("booking_modify_modal").showModal();
   };

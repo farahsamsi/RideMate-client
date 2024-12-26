@@ -28,7 +28,6 @@ const UpdateModal = ({ carId, fetchMyCars }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("clicked update");
 
     const form = e.target;
     const userName = form.userName.value;
@@ -59,8 +58,6 @@ const UpdateModal = ({ carId, fetchMyCars }) => {
       available,
       datePosted,
     };
-
-    console.log(carUpdateData);
 
     // update car data to the server
     fetch(`${import.meta.env.VITE_url}/cars/${carId}`, {
