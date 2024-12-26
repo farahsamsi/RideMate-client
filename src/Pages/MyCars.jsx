@@ -30,11 +30,13 @@ const MyCars = () => {
     //   .then((res) => res.json())
     //   .then((data) => setMyCars(data));
 
-    // axios
-    //   .get(`${import.meta.env.VITE_url}/cars/myCars/${email}`)
-    //   .then((res) => setMyCars(res.data));
+    axios
+      .get(`${import.meta.env.VITE_url}/cars/myCars/${email}`, {
+        withCredentials: true,
+      })
+      .then((res) => setMyCars(res.data));
 
-    axiosSecure.get(`/cars/myCars/${email}`).then((res) => setMyCars(res.data));
+    // axiosSecure.get(`/cars/myCars/${email}`).then((res) => setMyCars(res.data));
   };
 
   // Sort by Date Added

@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import moment from "moment";
 import { SlCalender } from "react-icons/sl";
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import axios from "axios";
 
 const MyBookings = () => {
   // const myBookingsLoaded = useLoaderData();
@@ -20,9 +21,15 @@ const MyBookings = () => {
     fetchMyBookingsData();
   }, [email]);
   const fetchMyBookingsData = async () => {
-    await fetch(`${import.meta.env.VITE_url}/carsBooking/myBookings/${email}`)
-      .then((res) => res.json())
-      .then((data) => setMyBookings(data));
+    // await fetch(`${import.meta.env.VITE_url}/carsBooking/myBookings/${email}`)
+    //   .then((res) => res.json())
+    //   .then((data) => setMyBookings(data));
+
+    axios
+      .get(`${import.meta.env.VITE_url}/carsBooking/myBookings/${email}`, {
+        withCredentials: true,
+      })
+      .then((res) => setMyBookings(res.data));
   };
 
   const handleModify = (_id) => {
