@@ -153,7 +153,7 @@ const AvailableCars = () => {
             toggleLayout ? "grid" : "block"
           }  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4`}
         >
-          {cars.map((car, index) => (
+          {cars?.map((car, index) => (
             <CarCard key={index} car={car} toggleLayout={toggleLayout} />
           ))}
         </div>

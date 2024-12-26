@@ -1,98 +1,153 @@
-import moment from "moment";
-import { MdOutlineDeleteOutline } from "react-icons/md";
-import { SlCalender } from "react-icons/sl";
-import Swal from "sweetalert2";
 import PropTypes from "prop-types";
-import ModifyBookingModal from "../Pages/ModifyBookingModal";
+import { useEffect, useState } from "react";
+import { SiBigcartel } from "react-icons/si";
+import Swal from "sweetalert2";
 
-const MyBookingRow = ({ car, fetchMyBookingsData }) => {
-  const handleModify = () => {
-    console.log("modify for", car?.carModel);
-    document.getElementById("booking_modify_modal").showModal();
-  };
+const MyBookingRow = ({ carId, fetchMyBookingsData }) => {
+  const [car, setCar] = useState({});
 
-  const handleDelete = (_id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Cancel it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fetch(`${import.meta.env.VITE_url}/carsBooking/${_id}`, {
-          method: "DELETE",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.deletedCount > 0) {
-              Swal.fire({
-                title: "Cancel!",
-                text: "Your Booking has been Canceled.",
-                icon: "success",
-              });
-              fetchMyBookingsData();
-            }
+  useEffect(() => {
+    if (carId) {
+      fetch(`${import.meta.env.VITE_url}/carsBooking/${carId}`)
+        .then((res) => res.json())
+        .then((data) => setCar(data));
+    }
+  }, [carId]);
+
+  // booking related functions
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [totalPrice, setTotalPrice] = useState(0);
+  // Get today's date in the format YYYY-MM-DD
+  const today = new Date().toISOString().slice(0, 16);
+
+  useEffect(() => {
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const diffInDays = 1 + (end - start) / (1000 * 60 * 60 * 24);
+      const total = Math.ceil(diffInDays * car?.dailyPrice);
+      // console.log("difference in days", diffInDays, "total:", total);
+      setTotalPrice(total);
+    }
+  }, [car?.dailyPrice, endDate, startDate]);
+
+  const handleUpdateNow = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const startDateTime = startDate;
+    const endDateTime = endDate;
+    const subTotal = totalPrice;
+    const updateCarBooking = {
+      startDateTime,
+      endDateTime,
+      subTotal,
+    };
+    console.log(updateCarBooking);
+
+    // update car data to the server
+    fetch(`${import.meta.env.VITE_url}/carsBooking/${carId}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(updateCarBooking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        document.getElementById("booking_modify_modal").close();
+        fetchMyBookingsData();
+        setStartDate("");
+        setEndDate("");
+        setTotalPrice(0);
+
+        if (data.modifiedCount) {
+          Swal.fire({
+            title: "Success",
+            text: "Car Booking updated successfully",
+            icon: "success",
+            confirmButtonText: "Cool",
           });
-      }
-    });
+        }
+      });
   };
 
   return (
-    <tr className="hover">
-      <td>
-        <div className="flex items-center gap-3">
-          <div className="avatar">
-            <div className="mask mask-squircle h-12 w-12">
-              <img src={car?.vehiclePhotoURL} alt={car?.carModel} />
+    <dialog id="booking_modify_modal" className="modal">
+      <div className="modal-box w-11/12 max-w-5xl">
+        <h3 className="font-bold text-lg">Hello! for {car?.carModel} </h3>
+        <div>
+          <form onSubmit={handleUpdateNow}>
+            <div>
+              <div className="grid lg:grid-cols-2 gap-4">
+                <div className="">
+                  <label className="label">
+                    <span className="label-text text-xl font-normal ">
+                      Pick Start Date
+                    </span>
+                  </label>
+                  <input
+                    name="startDate"
+                    type="datetime-local"
+                    value={startDate}
+                    onChange={(e) => {
+                      setStartDate(e.target.value);
+                    }}
+                    min={today}
+                    max={endDate || ""}
+                    placeholder=""
+                    className="input input-bordered w-full"
+                    required
+                  />
+                </div>
+                <div className="">
+                  <label className="label">
+                    <span className="label-text text-xl font-normal ">
+                      Pick End Date
+                    </span>
+                  </label>
+                  <input
+                    name="endDate"
+                    type="datetime-local"
+                    value={endDate}
+                    onChange={(e) => {
+                      setEndDate(e.target.value);
+                    }}
+                    min={startDate || today}
+                    placeholder=""
+                    className="input input-bordered w-full"
+                    required
+                  />
+                </div>
+                <div className="">
+                  <label className="label">
+                    <span className="label-text text-xl font-normal ">
+                      Total Price: ${totalPrice}
+                    </span>
+                  </label>
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    // onClick={handleUpdateNow}
+                    className="btn bg-primary "
+                  >
+                    <SiBigcartel />
+                    Update Now
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-          <div>
-            <div className="font-bold">{car?.carModel}</div>
-          </div>
+          </form>
         </div>
-      </td>
-      <td>
-        <span className="badge badge-ghost">${car?.subTotal}</span>
-      </td>
-      <td>
-        <span
-          className={`badge badge-ghost 
-                            ${car?.bookingStatus === "Pending" && "bg-blue-400"}
-                            ${
-                              car?.bookingStatus === "Confirm" && "bg-green-400"
-                            }
-                            ${car?.bookingStatus === "Cancel" && "bg-red-400"}
-                            `}
-        >
-          {car?.bookingStatus}
-        </span>
-      </td>
-      <th>
-        From : {moment(car?.startDateTime).format("lll")} <br />
-        To : {moment(car?.endDateTime).format("lll")}
-      </th>
-
-      <th>
-        <div className="flex flex-col  items-center justify-center gap-1">
-          <button
-            onClick={() => handleModify()}
-            className="btn  bg-blue-500 btn-sm"
-          >
-            <SlCalender /> Modify Date
-          </button>
-          <ModifyBookingModal></ModifyBookingModal>
-          <button
-            onClick={() => handleDelete(car?._id)}
-            className="btn  text-white bg-red-600 btn-sm"
-          >
-            <MdOutlineDeleteOutline /> Cancel
-          </button>
+        <div className="modal-action">
+          <form method="dialog">
+            {/* if there is a button, it will close the modal */}
+            <button className="btn">Close</button>
+          </form>
         </div>
-      </th>
-    </tr>
+      </div>
+    </dialog>
   );
 };
 

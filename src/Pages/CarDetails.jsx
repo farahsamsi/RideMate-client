@@ -47,7 +47,7 @@ const CarDetails = () => {
       const start = new Date(startDate);
       const end = new Date(endDate);
       const diffInDays = 1 + (end - start) / (1000 * 60 * 60 * 24);
-      const total = diffInDays * dailyPrice;
+      const total = Math.ceil(diffInDays * dailyPrice);
       // console.log("difference in days", diffInDays, "total:", total);
       setTotalPrice(total);
     }
@@ -104,7 +104,7 @@ const CarDetails = () => {
             if (data.insertedId) {
               Swal.fire({
                 title: "Success",
-                text: "Car added successfully",
+                text: "Car Booking is Successful",
                 icon: "success",
                 confirmButtonText: "Cool",
               });

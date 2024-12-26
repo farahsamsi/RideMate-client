@@ -1,24 +1,20 @@
 import { useEffect, useState } from "react";
-import { Link, useLoaderData, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import MyBookingRow from "../Components/MyBookingRow";
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Cell,
-  Rectangle,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Bar, BarChart, CartesianGrid, Cell, XAxis, YAxis } from "recharts";
 import { Legend, Tooltip } from "chart.js";
+import Swal from "sweetalert2";
+import moment from "moment";
+import { SlCalender } from "react-icons/sl";
+import { MdOutlineDeleteOutline } from "react-icons/md";
 
 const MyBookings = () => {
   // const myBookingsLoaded = useLoaderData();
   const { email } = useParams();
 
   const [myBookings, setMyBookings] = useState([]);
+  const [updateBookingId, setUpdateBookingId] = useState(null);
 
   useEffect(() => {
     fetchMyBookingsData();
@@ -29,14 +25,42 @@ const MyBookings = () => {
       .then((data) => setMyBookings(data));
   };
 
-  // function extractDailyPriceAndCarModel(myBookings) {
-  //   return myBookings.map((booking) => {
-  //     return {
-  //       dailyPrice: booking.dailyPrice,
-  //       carModel: booking.carModel,
-  //     };
-  //   });
-  // }
+  const handleModify = (_id) => {
+    console.log("modify for", _id);
+    setUpdateBookingId(_id);
+    document.getElementById("booking_modify_modal").showModal();
+  };
+
+  const handleDelete = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Delete Booking!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`${import.meta.env.VITE_url}/carsBooking/${_id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount > 0) {
+              Swal.fire({
+                title: "Cancel!",
+                text: "Your Booking has been Canceled.",
+                icon: "success",
+              });
+              fetchMyBookingsData();
+            }
+          });
+      }
+    });
+  };
+
+  // rechart related functions
   const [dailyPriceAndCarModel, setDailyPriceAndCarModel] = useState([]);
   useEffect(() => {
     const array = myBookings.map((booking) => {
@@ -47,8 +71,6 @@ const MyBookings = () => {
     });
     setDailyPriceAndCarModel(array);
   }, [myBookings]);
-  // const dailyPriceAndCarModel = extractDailyPriceAndCarModel(myBookings);
-  console.log(dailyPriceAndCarModel);
   const getPath = (x, y, width, height) => {
     return `M${x},${y + height}C${x + width / 3},${y + height} ${
       x + width / 2
@@ -111,13 +133,69 @@ const MyBookings = () => {
                 <tbody>
                   {/* row  */}
                   {myBookings.map((car) => (
-                    <MyBookingRow
-                      key={car._id}
-                      car={car}
-                      setMyBookings={setMyBookings}
-                      myBookings={myBookings}
-                      fetchMyBookingsData={fetchMyBookingsData}
-                    ></MyBookingRow>
+                    <tr key={car._id} className="hover">
+                      <td>
+                        <div className="flex items-center gap-3">
+                          <div className="avatar">
+                            <div className="mask mask-squircle h-12 w-12">
+                              <img
+                                src={car?.vehiclePhotoURL}
+                                alt={car?.carModel}
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <div className="font-bold">{car?.carModel}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <span className="badge badge-ghost">
+                          ${car?.subTotal}
+                        </span>
+                      </td>
+                      <td>
+                        <span
+                          className={`badge badge-ghost 
+                                                ${
+                                                  car?.bookingStatus ===
+                                                    "Pending" && "bg-blue-400"
+                                                }
+                                                ${
+                                                  car?.bookingStatus ===
+                                                    "Confirm" && "bg-green-400"
+                                                }
+                                                ${
+                                                  car?.bookingStatus ===
+                                                    "Cancel" && "bg-red-400"
+                                                }
+                                                `}
+                        >
+                          {car?.bookingStatus}
+                        </span>
+                      </td>
+                      <th>
+                        From : {moment(car?.startDateTime).format("lll")} <br />
+                        To : {moment(car?.endDateTime).format("lll")}
+                      </th>
+
+                      <th>
+                        <div className="flex flex-col  items-center justify-center gap-1">
+                          <button
+                            onClick={() => handleModify(car?._id)}
+                            className="btn  bg-blue-500 btn-sm"
+                          >
+                            <SlCalender /> Modify Date
+                          </button>
+                          <button
+                            onClick={() => handleDelete(car?._id)}
+                            className="btn  text-white bg-red-600 btn-sm"
+                          >
+                            <MdOutlineDeleteOutline /> Cancel
+                          </button>
+                        </div>
+                      </th>
+                    </tr>
                   ))}
                 </tbody>
               </table>
@@ -126,6 +204,10 @@ const MyBookings = () => {
         )}
       </div>
       {/* Table */}
+      <MyBookingRow
+        carId={updateBookingId && updateBookingId}
+        fetchMyBookingsData={fetchMyBookingsData}
+      ></MyBookingRow>
       <div className="hidden my-8 w-full md:flex items-center justify-center">
         <div>
           <h1 className="text-center text-3xl">
@@ -146,7 +228,7 @@ const MyBookings = () => {
             <XAxis dataKey="carModel" />
             <YAxis />
             <Tooltip content="Daily Price " />
-            <Legend />
+            {/* <Legend /> */}
             <Bar
               dataKey="dailyPrice"
               fill="#8884d8"
