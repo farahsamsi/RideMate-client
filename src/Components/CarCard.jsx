@@ -6,16 +6,13 @@ import { Link } from "react-router-dom";
 const CarCard = ({ car, toggleLayout }) => {
   const {
     _id,
-    userName,
-    userEmail,
+
     carModel,
     dailyPrice,
-    regNo,
-    description,
-    features,
+
     vehiclePhotoURL,
     location,
-    bookingCount,
+
     available,
     datePosted,
   } = car || {};
