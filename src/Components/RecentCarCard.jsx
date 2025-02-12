@@ -2,9 +2,11 @@ import moment from "moment";
 import PropTypes from "prop-types";
 import { FaCar, FaUser } from "react-icons/fa";
 import { LuBookmarkCheck } from "react-icons/lu";
+import { Link } from "react-router-dom";
 
 const RecentCarCard = ({ car }) => {
   const {
+    _id,
     userName,
     userEmail,
     carModel,
@@ -56,6 +58,9 @@ const RecentCarCard = ({ car }) => {
             <div className="text-xl font-bold text-orange-500">
               $ {dailyPrice}/day
             </div>
+            <Link to={`/cars/${_id}`}>
+              <button className="btn bg-primary">See Details</button>
+            </Link>
           </div>
         </div>
       </div>

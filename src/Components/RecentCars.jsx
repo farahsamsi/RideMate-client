@@ -1,18 +1,11 @@
 import { useEffect, useState } from "react";
 import RecentCarCard from "./RecentCarCard";
 import { useLoaderData } from "react-router-dom";
+// import CarCard from "./CarCard";
 
 const RecentCars = () => {
   const carsLoaded = useLoaderData();
   const [cars, setCars] = useState(carsLoaded);
-
-  // useEffect(() => {
-  //   fetch(`${import.meta.env.VITE_url}/cars`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setCars(data);
-  //     });
-  // }, []);
 
   // Sort by Date Added
   useEffect(() => {
@@ -42,6 +35,7 @@ const RecentCars = () => {
       >
         {cars.slice(0, 6).map((car, index) => (
           <RecentCarCard key={index} car={car} />
+          // <CarCard key={index} car={car} />
         ))}
       </div>
     </div>
