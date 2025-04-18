@@ -8,6 +8,10 @@ The RideMate is a feature-rich, user-centric platform designed to facilitate sea
 
 [Deployed Website](https://ride-mate.netlify.app) https://ride-mate.netlify.app or https://ridemate-5d791.web.app
 
+## Server Side Repository Link
+
+[Deployed Website](https://github.com/farahsamsi/RideMate-server) https://github.com/farahsamsi/RideMate-server
+
 ## Purpose
 
 To revolutionize car rentals through a modern, user-friendly platform that leverages advanced technologies for secure, efficient, and enjoyable user experiences.
@@ -131,6 +135,51 @@ To revolutionize car rentals through a modern, user-friendly platform that lever
 
 - **Real-Time Booking Count Updates:** MongoDB operators like `$inc` to track bookings.
 - **Animations:** Enhance user experience with hover and scroll animations.
+
+---
+
+## Installation and Setup
+
+1.  **Clone the Repository:**
+
+    ```bash
+    git clone https://github.com/farahsamsi/RideMate-client.git
+    ```
+
+2.  **Navigate to the Project Directory:**
+
+    ```bash
+    cd RideMate-client
+    ```
+
+3.  **Install Dependencies:**
+
+    - Client:
+      ```bash
+      npm install
+      ```
+
+4.  **Set Environment Variables:**
+
+    - Create a `.env` file in `client` directories.
+    - Add the following variables: - For the client:
+
+      ```env
+      VITE_API_URL=your_backend_api_url
+      VITE_FIREBASE_API_KEY=your_firebase_api_key
+      VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+      VITE_FIREBASE_PROJECT_ID=your_project_id
+      VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+      VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+      VITE_FIREBASE_APP_ID=your_app_id
+      ```
+
+5.  **Run the Application:**
+
+    - Start the client:
+      ```bash
+      npm run dev
+      ```
 
 ---
 
