@@ -10,7 +10,7 @@ The RideMate is a feature-rich, user-centric platform designed to facilitate sea
 
 ## Server Side Repository Link
 
-[Deployed Website](https://github.com/farahsamsi/RideMate-server) https://github.com/farahsamsi/RideMate-server
+[Server Side repository](https://github.com/farahsamsi/RideMate-server) https://github.com/farahsamsi/RideMate-server
 
 ## Purpose
 
