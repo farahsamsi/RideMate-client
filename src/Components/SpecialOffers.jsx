@@ -1,5 +1,6 @@
 import AOS from "aos";
 import { useEffect } from "react";
+import { FaCarSide } from "react-icons/fa";
 
 const SpecialOffers = () => {
   useEffect(() => {
@@ -47,9 +48,64 @@ const SpecialOffers = () => {
               </div>
             </div>
             <div className="card-actions w-full">
-              <button className="btn bg-primary w-full ">Learn More</button>
+              <button
+                onClick={() =>
+                  document.getElementById("my_modal_for_card_1").showModal()
+                }
+                className="btn bg-primary w-full "
+              >
+                Learn More
+              </button>
             </div>
           </div>
+          {/* modal for card 1 */}
+          {/* Open the modal using document.getElementById('ID').showModal() method */}
+          <dialog
+            id="my_modal_for_card_1"
+            className="modal modal-bottom sm:modal-middle"
+          >
+            <div className="modal-box">
+              <div className="flex items-center gap-3 mb-4">
+                <FaCarSide className="text-2xl text-primary" />
+                <h3 className="text-xl font-bold text-primary">
+                  Weekend Escape Discount
+                </h3>
+              </div>
+              <p className="py-4">
+                <p className="text-base mb-3 text-gray-700">
+                  <strong>Enjoy 20% Off</strong> on all SUV rentals every
+                  weekend!
+                </p>
+
+                <ul className="list-disc list-inside text-sm text-gray-600 space-y-1 mb-4">
+                  <li>
+                    Flat 20% discount on all SUV rentals every Friday to Sunday
+                  </li>
+                  <li>Spacious, comfortable SUVs for group travel</li>
+                  <li>Reliable and well-maintained vehicles</li>
+                  <li>Easy online booking and flexible pickup options</li>
+                </ul>
+              </p>
+              <p className="text-sm text-gray-700 mb-2">
+                <strong>Offer Validity:</strong> Every weekend (Friday 12:01 AM
+                – Sunday 11:59 PM)
+              </p>
+              <p className="text-sm text-gray-700 mb-2">
+                <strong>Available Locations:</strong> All major cities across
+                Bangladesh – Dhaka, Chittagong, Sylhet, and more
+              </p>
+              <p className="text-xs text-gray-500 italic mb-4">
+                *Offer applicable only on SUV category rentals. Discount
+                auto-applied at checkout. Subject to availability.
+              </p>
+              <div className="modal-action">
+                <form method="dialog">
+                  {/* if there is a button in form, it will close the modal */}
+                  <button className="btn">Close</button>
+                </form>
+              </div>
+            </div>
+          </dialog>
         </div>
         {/* card 2 */}
         <div
