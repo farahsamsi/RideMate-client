@@ -1,6 +1,6 @@
 import AOS from "aos";
 import { useEffect } from "react";
-import { FaCarSide, FaGift } from "react-icons/fa";
+import { FaCarSide, FaClock, FaGift } from "react-icons/fa";
 
 const SpecialOffers = () => {
   useEffect(() => {
@@ -217,8 +217,65 @@ const SpecialOffers = () => {
               </div>
             </div>
             <div className="card-actions w-full">
-              <button className="btn bg-primary w-full ">Learn More</button>
+              <button
+                onClick={() =>
+                  document.getElementById("my_modal_for_card_3").showModal()
+                }
+                className="btn bg-primary w-full "
+              >
+                Learn More
+              </button>
             </div>
+            {/* modal for card 3 */}
+            {/* Open the modal using document.getElementById('ID').showModal() method */}
+            <dialog
+              id="my_modal_for_card_3"
+              className="modal modal-bottom sm:modal-middle"
+            >
+              <div className="modal-box text-left">
+                <div className="flex items-center gap-3 mb-4">
+                  <FaClock className="text-2xl text-yellow-500" />
+                  <h3 className="text-xl font-bold text-yellow-600">
+                    Early Bird Saver
+                  </h3>
+                </div>
+                <p className="py-4">
+                  <p className="text-base mb-3 text-gray-700">
+                    <strong>Book your car 7 days in advance</strong> and enjoy a{" "}
+                    <strong>15% discount</strong> instantly!
+                  </p>
+
+                  <ul className="list-disc list-inside text-sm text-gray-600 space-y-1 mb-4">
+                    <li>
+                      15% discount when you book at least 7 days in advance
+                    </li>
+                    <li>
+                      Valid on all car types including economy, SUVs, and luxury
+                    </li>
+                    <li>Perfect for planners who love saving more</li>
+                    <li>Instant discount applied during checkout</li>
+                  </ul>
+                </p>
+                <p className="text-sm text-gray-700 mb-2">
+                  <strong>Who can use this?</strong> Anyone planning ahead for
+                  trips, events, or business travel
+                </p>
+                <p className="text-sm text-gray-700 mb-2">
+                  <strong>Available Nationwide:</strong> Dhaka, Sylhet, Khulna,
+                  Rajshahi, and more
+                </p>
+                <p className="text-xs text-gray-500 italic mb-4">
+                  *Booking must be made at least 7 full days before the pickup
+                  date. Subject to availability. Terms apply.
+                </p>
+                <div className="modal-action">
+                  <form method="dialog">
+                    {/* if there is a button in form, it will close the modal */}
+                    <button className="btn">Close</button>
+                  </form>
+                </div>
+              </div>
+            </dialog>
           </div>
         </div>
       </div>
