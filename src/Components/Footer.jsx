@@ -2,6 +2,7 @@ import {
   FaArrowRight,
   FaFacebookF,
   FaInstagram,
+  FaPhoneAlt,
   FaRoad,
   FaWhatsapp,
   FaYoutube,
@@ -114,7 +115,63 @@ const Footer = () => {
               </div>
             </div>
           </dialog>
-          <a className="link link-hover text-lg">Contact</a>
+          <button
+            onClick={() => document.getElementById("contact_modal").showModal()}
+            className="link link-hover text-lg"
+          >
+            Contact
+          </button>
+          {/* contact modal */}
+          {/* Open the modal using document.getElementById('ID').showModal() method */}
+          <dialog
+            id="contact_modal"
+            className="modal modal-bottom sm:modal-middle"
+          >
+            <div className="modal-box">
+              <div className="flex items-center gap-3 mb-4">
+                <FaPhoneAlt className="text-2xl text-green-600" />
+                <h3 className="text-xl font-bold text-green-700">Contact Us</h3>
+              </div>
+
+              <p className="text-base text-gray-700 mb-3">
+                Have a question, need help with your booking, or just want to
+                say hello? Our team at <strong>RideMate</strong> is here for
+                you!
+              </p>
+
+              <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                <li>
+                  <strong>📞 Phone:</strong> +880 1234 567 890
+                </li>
+                <li>
+                  <strong>📧 Email:</strong> support@ridemate.com
+                </li>
+                <li>
+                  <strong>📍 Address:</strong> House 12, Road 4, Dhanmondi,
+                  Dhaka, Bangladesh
+                </li>
+                <li>
+                  <strong>🕒 Support Hours:</strong> 9 AM – 9 PM (Everyday)
+                </li>
+              </ul>
+
+              <p className="text-sm text-gray-700 mb-2">
+                You can also reach out via the live chat available on the
+                website or message us on our social channels.
+              </p>
+
+              <p className="text-xs text-gray-500 italic mb-4">
+                We usually respond within an hour during support hours. Your
+                journey matters to us!
+              </p>
+              <div className="modal-action">
+                <form method="dialog">
+                  {/* if there is a button in form, it will close the modal */}
+                  <button className="btn">Close</button>
+                </form>
+              </div>
+            </div>
+          </dialog>
           <Link to="/availableCars" className="link link-hover text-lg">
             Cars
           </Link>
