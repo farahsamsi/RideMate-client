@@ -23,6 +23,10 @@ export const AuthContext = createContext();
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
+  // theme controller from local storage
+  const themeLS = localStorage.getItem("setTheme") || "light";
+  const [theme, setTheme] = useState(themeLS);
+
   // loading state
   const [loading, setLoading] = useState(true);
 
@@ -108,6 +112,8 @@ const AuthProvider = ({ children }) => {
     user,
     setUser,
     loading,
+    theme,
+    setTheme,
   };
 
   return (
