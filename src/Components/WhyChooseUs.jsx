@@ -21,9 +21,7 @@ const WhyChooseUs = () => {
             />
           </figure>
           <div className="card-body">
-            <h2 className=" font-bold text-black ">
-              Wide Selection of Vehicles
-            </h2>
+            <h2 className=" font-bold  ">Wide Selection of Vehicles</h2>
             <p>
               Choose from a diverse range of cars, from budget-friendly options
               to luxury models, all maintained to the highest standards.
@@ -41,7 +39,7 @@ const WhyChooseUs = () => {
             />
           </figure>
           <div className="card-body ">
-            <h2 className=" font-bold text-black ">Affordable Pricing</h2>
+            <h2 className=" font-bold  ">Affordable Pricing</h2>
             <p>
               Transparent and competitive pricing with no hidden fees, ensuring
               you get the best value for your money.
@@ -59,7 +57,7 @@ const WhyChooseUs = () => {
             />
           </figure>
           <div className="card-body ">
-            <h2 className=" font-bold text-black ">Seamless Booking Process</h2>
+            <h2 className=" font-bold  ">Seamless Booking Process</h2>
             <p>
               With our user-friendly platform, renting a car is quick, easy, and
               hassle-free.
@@ -77,7 +75,7 @@ const WhyChooseUs = () => {
             />
           </figure>
           <div className="card-body ">
-            <h2 className=" font-bold text-black ">Commitment to Safety</h2>
+            <h2 className=" font-bold  ">Commitment to Safety</h2>
             <p>
               Every car is thoroughly inspected and sanitized, prioritizing your
               safety and comfort.

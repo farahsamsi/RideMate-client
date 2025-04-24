@@ -18,7 +18,7 @@ const CarCard = ({ car, toggleLayout }) => {
   } = car || {};
   return (
     <div
-      className={`bg-white rounded-xl shadow-lg p-4 mx-2 mb-4 ${
+      className={` rounded-xl shadow-lg p-4 mx-2 mb-4 ${
         toggleLayout ? "" : "md:grid grid-cols-2"
       }`}
     >
@@ -52,7 +52,7 @@ const CarCard = ({ car, toggleLayout }) => {
 
           <div className="card-actions flex justify-between items-center mt-4">
             <Link to={`/cars/${_id}`}>
-              <button className="btn bg-primary">See Details</button>
+              <button className="btn bg-primary text-white">See Details</button>
             </Link>
             <div className="text-xl font-bold text-orange-500">
               $ {dailyPrice}/day

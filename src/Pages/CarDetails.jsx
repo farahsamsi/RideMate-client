@@ -235,7 +235,7 @@ const CarDetails = () => {
                   </p>
                   <button
                     // onClick={handleBookNow}
-                    className="btn bg-primary "
+                    className="btn bg-primary text-white"
                   >
                     <SiBigcartel />
                     Book Now

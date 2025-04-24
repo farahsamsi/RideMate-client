@@ -135,7 +135,7 @@ const Navbar = () => {
   return (
     <div
       className={`  sticky top-0 z-50 ${
-        theme === "light" ? "bg-white" : "bg-slate-900"
+        theme === "light" ? "bg-white" : "bg-[#1D232A]"
       }`}
     >
       <div className="navbar px-4  items-center">

@@ -52,7 +52,7 @@ const SpecialOffers = () => {
                 onClick={() =>
                   document.getElementById("my_modal_for_card_1").showModal()
                 }
-                className="btn bg-primary w-full "
+                className="btn bg-primary w-full text-white "
               >
                 Learn More
               </button>
@@ -72,7 +72,7 @@ const SpecialOffers = () => {
                 </h3>
               </div>
               <p className="py-4">
-                <p className="text-base mb-3 text-gray-700">
+                <p className="text-base mb-3 ">
                   <strong>Enjoy 20% Off</strong> on all SUV rentals every
                   weekend!
                 </p>
@@ -86,11 +86,11 @@ const SpecialOffers = () => {
                   <li>Easy online booking and flexible pickup options</li>
                 </ul>
               </p>
-              <p className="text-sm text-gray-700 mb-2">
+              <p className="text-sm  mb-2">
                 <strong>Offer Validity:</strong> Every weekend (Friday 12:01 AM
                 – Sunday 11:59 PM)
               </p>
-              <p className="text-sm text-gray-700 mb-2">
+              <p className="text-sm  mb-2">
                 <strong>Available Locations:</strong> All major cities across
                 Bangladesh – Dhaka, Chittagong, Sylhet, and more
               </p>
@@ -127,7 +127,7 @@ const SpecialOffers = () => {
                 onClick={() =>
                   document.getElementById("my_modal_for_card_2").showModal()
                 }
-                className="btn bg-primary w-full "
+                className="btn bg-primary w-full text-white "
               >
                 Learn More
               </button>
@@ -146,7 +146,7 @@ const SpecialOffers = () => {
                   </h3>
                 </div>
                 <p className="py-4">
-                  <p className="text-base mb-3 text-gray-700">
+                  <p className="text-base mb-3 ">
                     <strong>Celebrate the season</strong> with up to{" "}
                     <strong>30% off</strong> on luxury car rentals!
                   </p>
@@ -163,11 +163,11 @@ const SpecialOffers = () => {
                     <li>Hassle-free booking with instant confirmation</li>
                   </ul>
                 </p>
-                <p className="text-sm text-gray-700 mb-2">
+                <p className="text-sm  mb-2">
                   <strong>Offer Period:</strong> Available during official
                   holidays and festive weeks
                 </p>
-                <p className="text-sm text-gray-700 mb-2">
+                <p className="text-sm  mb-2">
                   <strong>Available Locations:</strong> Major cities across
                   Bangladesh – Dhaka, Chittagong, Cox’s Bazar, and more
                 </p>
@@ -221,7 +221,7 @@ const SpecialOffers = () => {
                 onClick={() =>
                   document.getElementById("my_modal_for_card_3").showModal()
                 }
-                className="btn bg-primary w-full "
+                className="btn bg-primary w-full text-white "
               >
                 Learn More
               </button>
@@ -240,7 +240,7 @@ const SpecialOffers = () => {
                   </h3>
                 </div>
                 <p className="py-4">
-                  <p className="text-base mb-3 text-gray-700">
+                  <p className="text-base mb-3 ">
                     <strong>Book your car 7 days in advance</strong> and enjoy a{" "}
                     <strong>15% discount</strong> instantly!
                   </p>
@@ -256,11 +256,11 @@ const SpecialOffers = () => {
                     <li>Instant discount applied during checkout</li>
                   </ul>
                 </p>
-                <p className="text-sm text-gray-700 mb-2">
+                <p className="text-sm  mb-2">
                   <strong>Who can use this?</strong> Anyone planning ahead for
                   trips, events, or business travel
                 </p>
-                <p className="text-sm text-gray-700 mb-2">
+                <p className="text-sm  mb-2">
                   <strong>Available Nationwide:</strong> Dhaka, Sylhet, Khulna,
                   Rajshahi, and more
                 </p>

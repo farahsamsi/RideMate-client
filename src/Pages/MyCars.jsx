@@ -149,7 +149,7 @@ const MyCars = () => {
               monitor bookings conveniently from this page.
             </h2>
             <Link to="/addCar">
-              <button className="btn btn-wide bg-primary">
+              <button className="btn btn-wide bg-primary text-white">
                 Go to Add Cars
               </button>
             </Link>

@@ -77,7 +77,7 @@ const AddCar = () => {
   };
 
   return (
-    <div className="w-11/12 container mx-auto bg-[#F4F3F0]">
+    <div className="w-11/12 container mx-auto border">
       <div className={`py-5 md:py-10 mb-6 md:mb-9 `}>
         <div className="w-10/12 mx-auto">
           <div className="text-center">
@@ -103,7 +103,7 @@ const AddCar = () => {
                   name="userName"
                   type="text"
                   value={`${user?.displayName}`}
-                  className="input w-full"
+                  className="input w-full border-slate-100"
                   readOnly
                 />
               </div>
@@ -118,7 +118,7 @@ const AddCar = () => {
                   type="email"
                   value={`${user?.email}`}
                   readOnly
-                  className="input w-full"
+                  className="input w-full border-slate-100 "
                   required
                 />
               </div>
@@ -136,7 +136,7 @@ const AddCar = () => {
                   name="carModel"
                   type="text"
                   placeholder="Enter Car Model"
-                  className="input w-full"
+                  className="input w-full border-slate-100"
                   required
                 />
               </div>
@@ -150,7 +150,7 @@ const AddCar = () => {
                   name="dailyPrice"
                   type="number"
                   placeholder="Enter Daily Rental Price"
-                  className="input w-full"
+                  className="input w-full border-slate-100"
                   required
                 />
               </div>
@@ -164,7 +164,7 @@ const AddCar = () => {
                   name="regNo"
                   type="text"
                   placeholder="Enter Vehicle Registration Number"
-                  className="input w-full"
+                  className="input w-full border-slate-100"
                   required
                 />
               </div>
@@ -182,7 +182,7 @@ const AddCar = () => {
                   name="description"
                   type="text"
                   placeholder="Write description for Your Vehicle"
-                  className="textarea input w-full"
+                  className="textarea input w-full border-slate-100"
                   required
                 />
               </div>
@@ -196,7 +196,7 @@ const AddCar = () => {
                   name="features"
                   type="text"
                   placeholder="Write Features of Your Vehicle and separate them using comma"
-                  className="textarea input w-full"
+                  className="textarea input w-full border-slate-100"
                   required
                 />
               </div>
@@ -214,7 +214,7 @@ const AddCar = () => {
                   name="vehiclePhotoURL"
                   type="text"
                   placeholder="Enter Vehicle Photo URL"
-                  className="input w-full"
+                  className="input w-full border-slate-100"
                   required
                 />
               </div>
@@ -231,7 +231,7 @@ const AddCar = () => {
                   name="location"
                   type="text"
                   placeholder="Enter Location"
-                  className="input w-full"
+                  className="input w-full border-slate-100"
                   required
                 />
               </div>
@@ -245,12 +245,12 @@ const AddCar = () => {
                   name="available"
                   type="text"
                   placeholder="Enter Location"
-                  className="input w-full"
+                  className="input w-full border-slate-100"
                   required
                 /> */}
                 <select
                   name="available"
-                  className="input w-full"
+                  className="input w-full border-slate-100"
                   id="genre"
                   value={availability}
                   onChange={handleAvailabilityChange}
@@ -268,7 +268,7 @@ const AddCar = () => {
             <div>
               <button
                 type="submit"
-                className={`btn bg-primary text-xl w-full `}
+                className={`btn bg-primary text-xl w-full text-white`}
               >
                 Add Car
               </button>

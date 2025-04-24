@@ -75,7 +75,7 @@ const Footer = () => {
                 </h3>
               </div>
 
-              <p className="text-base text-gray-700 mb-3">
+              <p className="text-base text-gray-600 mb-3">
                 <strong>RideMate</strong> is your trusted companion for smooth,
                 flexible, and enjoyable travel experiences across Bangladesh.
                 Whether you&apos;re planning a spontaneous road trip or a
@@ -96,7 +96,7 @@ const Footer = () => {
                 <li>24/7 customer support to help you anytime, anywhere</li>
               </ul>
 
-              <p className="text-sm text-gray-700 mb-2">
+              <p className="text-sm text-gray-600 mb-2">
                 At RideMate, we believe that the journey should be just as
                 memorable as the destination. That&apos;s why we’re dedicated to
                 making your ride easy, reliable, and enjoyable.
@@ -133,7 +133,7 @@ const Footer = () => {
                 <h3 className="text-xl font-bold text-green-700">Contact Us</h3>
               </div>
 
-              <p className="text-base text-gray-700 mb-3">
+              <p className="text-base text-gray-600 mb-3">
                 Have a question, need help with your booking, or just want to
                 say hello? Our team at <strong>RideMate</strong> is here for
                 you!
@@ -155,7 +155,7 @@ const Footer = () => {
                 </li>
               </ul>
 
-              <p className="text-sm text-gray-700 mb-2">
+              <p className="text-sm text-gray-600 mb-2">
                 You can also reach out via the live chat available on the
                 website or message us on our social channels.
               </p>

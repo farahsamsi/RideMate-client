@@ -19,7 +19,7 @@ const RecentCarCard = ({ car }) => {
 
   return (
     <div
-      className={`bg-white rounded-xl shadow-lg p-4 mx-2 mb-4 hover:scale-105 transition ease-in-out`}
+      className={` rounded-xl shadow-lg p-4 mx-2 mb-4 hover:scale-105 transition ease-in-out`}
     >
       <img
         src={vehiclePhotoURL}
@@ -30,14 +30,16 @@ const RecentCarCard = ({ car }) => {
         <div className="flex-1 flex flex-col items-center lg:justify-center ">
           <div className="flex flex-col items-center "></div>
           <h2 className={`text-2xl`}>{carModel}</h2>
-          <div className=" space-y-2 text-gray-600 text-sm my-2">
+          <div className=" space-y-2  text-sm my-2">
             <div className="flex items-center gap-1">
               <FaUser /> <span>Added {moment(datePosted).fromNow()}</span>
             </div>
 
             <div className="flex items-center gap-1">
               <FaCar />
-              <span className={`${available ? "badge bg-primary" : ""}`}>
+              <span
+                className={`${available ? "badge bg-primary text-white" : ""}`}
+              >
                 {" "}
                 {available
                   ? "Available For Immediate Booking"
@@ -55,7 +57,7 @@ const RecentCarCard = ({ car }) => {
               $ {dailyPrice}/day
             </div>
             <Link to={`/cars/${_id}`}>
-              <button className="btn bg-primary">See Details</button>
+              <button className="btn bg-primary text-white">See Details</button>
             </Link>
           </div>
         </div>
