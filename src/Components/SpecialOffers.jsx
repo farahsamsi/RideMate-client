@@ -1,6 +1,6 @@
 import AOS from "aos";
 import { useEffect } from "react";
-import { FaCarSide } from "react-icons/fa";
+import { FaCarSide, FaGift } from "react-icons/fa";
 
 const SpecialOffers = () => {
   useEffect(() => {
@@ -123,8 +123,67 @@ const SpecialOffers = () => {
               </div>
             </div>
             <div className="card-actions w-full">
-              <button className="btn bg-primary w-full ">Learn More</button>
+              <button
+                onClick={() =>
+                  document.getElementById("my_modal_for_card_2").showModal()
+                }
+                className="btn bg-primary w-full "
+              >
+                Learn More
+              </button>
             </div>
+            {/* modal for card 2 */}
+            {/* Open the modal using document.getElementById('ID').showModal() method */}
+            <dialog
+              id="my_modal_for_card_2"
+              className="modal modal-bottom sm:modal-middle"
+            >
+              <div className="modal-box text-left">
+                <div className="flex items-center gap-3 mb-4">
+                  <FaGift className="text-2xl text-red-500" />
+                  <h3 className="text-xl font-bold text-red-500">
+                    Holiday Specials
+                  </h3>
+                </div>
+                <p className="py-4">
+                  <p className="text-base mb-3 text-gray-700">
+                    <strong>Celebrate the season</strong> with up to{" "}
+                    <strong>30% off</strong> on luxury car rentals!
+                  </p>
+
+                  <ul className="list-disc list-inside text-sm text-gray-600 space-y-1 mb-4">
+                    <li>
+                      Up to 30% discount on luxury car rentals during the
+                      holiday season
+                    </li>
+                    <li>Choose from top-tier models with premium comfort</li>
+                    <li>
+                      Ideal for festive events, celebrations, or elegant travel
+                    </li>
+                    <li>Hassle-free booking with instant confirmation</li>
+                  </ul>
+                </p>
+                <p className="text-sm text-gray-700 mb-2">
+                  <strong>Offer Period:</strong> Available during official
+                  holidays and festive weeks
+                </p>
+                <p className="text-sm text-gray-700 mb-2">
+                  <strong>Available Locations:</strong> Major cities across
+                  Bangladesh – Dhaka, Chittagong, Cox’s Bazar, and more
+                </p>
+                <p className="text-xs text-gray-500 italic mb-4">
+                  *Valid only for luxury car category. Discounts may vary by
+                  date and availability. Offer applied automatically at
+                  checkout.
+                </p>
+                <div className="modal-action">
+                  <form method="dialog">
+                    {/* if there is a button in form, it will close the modal */}
+                    <button className="btn">Close</button>
+                  </form>
+                </div>
+              </div>
+            </dialog>
           </div>
           <figure className="">
             <img
