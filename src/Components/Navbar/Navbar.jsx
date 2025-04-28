@@ -69,8 +69,9 @@ const Navbar = () => {
             <NavLink to={`/myCars/${user?.email}`}>My Cars</NavLink>
           </li>
           <li>
-            <NavLink to={`/myBookings/${user?.email}`}>My Bookings</NavLink>
+            <NavLink to={`/myDashboard`}>Dashboard</NavLink>
           </li>
+
           <li onClick={signOutBtn}>
             <a>Logout</a>
           </li>
